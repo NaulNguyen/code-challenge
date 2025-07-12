@@ -5,6 +5,14 @@ export const styles = {
             "linear-gradient(135deg, #E3F2FD 0%, #FFFFFF 50%, #EEF2FF 100%)",
         p: 4,
     },
+    container: {
+        maxWidth: { xs: "100%", sm: "480px" },
+        px: { xs: 1, sm: 2 }
+    },
+    mobileCard: {
+        borderRadius: { xs: 2, sm: 4 },
+        mx: { xs: 0, sm: "auto" }
+    },
     header: {
         textAlign: "center",
         mb: 4,
