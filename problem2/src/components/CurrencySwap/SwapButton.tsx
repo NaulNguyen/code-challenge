@@ -7,6 +7,7 @@ interface SwapButtonProps {
     amount: string;
     isLoading: boolean;
     handleSwap: () => void;
+    validationError?: string;
 }
 
 const SwapButton = ({
@@ -15,12 +16,19 @@ const SwapButton = ({
     amount,
     isLoading,
     handleSwap,
+    validationError,
 }: SwapButtonProps) => {
     return (
         <Button
             variant="contained"
             onClick={handleSwap}
-            disabled={!fromCurrency || !toCurrency || !amount || isLoading}
+            disabled={
+                !fromCurrency ||
+                !toCurrency ||
+                !amount ||
+                isLoading ||
+                !!validationError
+            }
             sx={{
                 py: 2,
                 background: "linear-gradient(90deg, #2563EB 0%, #4F46E5 100%)",
