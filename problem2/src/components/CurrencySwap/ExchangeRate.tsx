@@ -1,12 +1,12 @@
-import { Box, Typography } from "@mui/material";
-import InfoOutlineIcon from "@mui/icons-material/InfoOutline";
+import { Box, Typography, Chip, Fade } from "@mui/material";
+import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import { styles } from "./styles";
 
 interface ExchangeRateProps {
     fromCurrency: string;
     toCurrency: string;
     getExchangeRate: () => number | null;
-    formatCurrencyAmount: (amount: number) => string;
+    formatCurrencyAmount: (amount: string) => string;
 }
 
 const ExchangeRate = ({
@@ -15,27 +15,87 @@ const ExchangeRate = ({
     getExchangeRate,
     formatCurrencyAmount,
 }: ExchangeRateProps) => {
+    const rate = getExchangeRate();
+
     return (
-        <Box sx={styles.exchangeRate}>
-            <Box
-                sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 1,
-                    mb: 1,
-                    color: "primary.main",
-                }}
-            >
-                <InfoOutlineIcon sx={{ fontSize: 20 }} />
-                <Typography variant="subtitle2" sx={{ fontWeight: "medium" }}>
-                    Exchange Rate
-                </Typography>
+        <Fade in timeout={500}>
+            <Box sx={styles.exchangeRate}>
+                <Box
+                    sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        mb: 1.5,
+                    }}
+                >
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                        <TrendingUpIcon
+                            sx={{
+                                fontSize: 20,
+                                color: "primary.main",
+                                animation: "pulse 2s ease-in-out infinite",
+                                "@keyframes pulse": {
+                                    "0%, 100%": { opacity: 1 },
+                                    "50%": { opacity: 0.7 },
+                                },
+                            }}
+                        />
+                        <Typography
+                            variant="subtitle2"
+                            sx={{
+                                fontWeight: 700,
+                                color: "primary.main",
+                            }}
+                        >
+                            Live Exchange Rate
+                        </Typography>
+                    </Box>
+                    <Chip
+                        label="LIVE"
+                        size="small"
+                        sx={{
+                            background:
+                                "linear-gradient(135deg, #4caf50 0%, #2e7d32 100%)",
+                            color: "white",
+                            fontWeight: 700,
+                            fontSize: "0.65rem",
+                            height: 20,
+                            animation: "blink 2s ease-in-out infinite",
+                            "@keyframes blink": {
+                                "0%, 100%": { opacity: 1 },
+                                "50%": { opacity: 0.8 },
+                            },
+                        }}
+                    />
+                </Box>
+                <Box
+                    sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        py: 1,
+                        px: 2,
+                        borderRadius: 2,
+                        background: "rgba(255, 255, 255, 0.7)",
+                        backdropFilter: "blur(10px)",
+                    }}
+                >
+                    <Typography
+                        variant="body1"
+                        sx={{
+                            color: "primary.dark",
+                            fontWeight: 700,
+                            fontSize: "1.1rem",
+                            textAlign: "center",
+                        }}
+                    >
+                        1 {fromCurrency} ={" "}
+                        {formatCurrencyAmount(rate?.toString() || "0")}{" "}
+                        {toCurrency}
+                    </Typography>
+                </Box>
             </Box>
-            <Typography variant="body2" sx={{ color: "primary.dark" }}>
-                1 {fromCurrency} = {formatCurrencyAmount(getExchangeRate()!)}{" "}
-                {toCurrency}
-            </Typography>
-        </Box>
+        </Fade>
     );
 };
 

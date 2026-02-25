@@ -35,10 +35,16 @@ export const AmountInput = ({
                     <Avatar
                         src={getCurrencyIcon(currency)}
                         sx={{
-                            width: 20,
-                            height: 20,
-                            border: "1px solid",
-                            borderColor: "divider",
+                            width: 28,
+                            height: 28,
+                            border: "2px solid",
+                            borderColor: readOnly ? "grey.300" : "primary.main",
+                            background: readOnly
+                                ? "grey.100"
+                                : "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                            "& img": {
+                                objectFit: "contain",
+                            },
                         }}
                         alt={currency}
                     />
@@ -47,9 +53,20 @@ export const AmountInput = ({
             endAdornment: currency && (
                 <InputAdornment position="end">
                     <Typography
-                        color="text.secondary"
+                        color={readOnly ? "text.secondary" : "primary.main"}
                         variant="body2"
-                        sx={{ fontWeight: 500 }}
+                        sx={{
+                            fontWeight: 600,
+                            fontSize: "0.9rem",
+                            background: readOnly
+                                ? "transparent"
+                                : "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                            backgroundClip: readOnly ? "unset" : "text",
+                            WebkitBackgroundClip: readOnly ? "unset" : "text",
+                            WebkitTextFillColor: readOnly
+                                ? "inherit"
+                                : "transparent",
+                        }}
                     >
                         {currency}
                     </Typography>
@@ -58,50 +75,78 @@ export const AmountInput = ({
         }}
         sx={{
             "& .MuiInputBase-root": {
-                borderRadius: 1,
-                transition: "all 0.2s ease-in-out",
+                borderRadius: 3,
+                background: readOnly
+                    ? "rgba(245, 245, 245, 0.8)"
+                    : "rgba(255, 255, 255, 0.9)",
+                backdropFilter: "blur(10px)",
+                transition: "all 0.3s ease-in-out",
+                fontSize: "1.1rem",
                 ...(readOnly && {
-                    backgroundColor: "grey.50",
                     "&:hover": {
-                        backgroundColor: "grey.100",
+                        backgroundColor: "rgba(240, 240, 240, 0.9)",
+                        transform: "translateY(-1px)",
+                        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
                     },
                     "& .MuiInputBase-input": {
                         cursor: "default",
-                        WebkitTextFillColor: "text.primary",
-                        color: "text.primary",
-                        opacity: 0.8,
+                        WebkitTextFillColor: "rgba(0, 0, 0, 0.8)",
+                        color: "rgba(0, 0, 0, 0.8)",
+                        fontWeight: 600,
                         "&::selection": {
                             backgroundColor: "transparent",
                         },
                     },
                     "& .MuiOutlinedInput-notchedOutline": {
                         borderColor: "grey.300",
+                        borderWidth: 2,
                     },
                     "&:hover .MuiOutlinedInput-notchedOutline": {
                         borderColor: "grey.400",
                     },
                 }),
                 ...(!readOnly && {
+                    "&:hover": {
+                        transform: "translateY(-1px)",
+                        boxShadow: "0 6px 20px rgba(102, 126, 234, 0.2)",
+                    },
                     "&:hover .MuiOutlinedInput-notchedOutline": {
                         borderColor: "primary.main",
+                        borderWidth: 2,
+                    },
+                    "&.Mui-focused": {
+                        transform: "translateY(-2px)",
+                        boxShadow: "0 8px 25px rgba(102, 126, 234, 0.3)",
                     },
                     "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
                         borderWidth: 2,
+                        borderColor: "primary.main",
+                    },
+                    "& .MuiInputBase-input": {
+                        fontWeight: 600,
+                        fontSize: "1.1rem",
                     },
                 }),
             },
             "& .MuiFormLabel-root": {
+                fontWeight: 600,
                 ...(readOnly && {
                     color: "text.secondary",
                     "&.Mui-focused": {
                         color: "text.secondary",
                     },
                 }),
+                ...(!readOnly && {
+                    "&.Mui-focused": {
+                        color: "primary.main",
+                        fontWeight: 700,
+                    },
+                }),
             },
             "& .MuiInputAdornment-root": {
                 "& .MuiTypography-root": {
-                    fontSize: "0.875rem",
-                    fontWeight: 500,
+                    fontSize: "0.9rem",
+                    fontWeight: 600,
                 },
             },
         }}
